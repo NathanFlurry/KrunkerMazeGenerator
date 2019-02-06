@@ -126,7 +126,7 @@ function generate(config) {
         baseMap.objects.push({
             p: [originX + (x + 0.5) * chunkSize, yPos, originZ + (y + 0.5) * chunkSize],
             s: [chunkSize, wallHeight, chunkSize],
-            id: 14,
+            id: 10,
             col: 1
         });
     }
@@ -174,6 +174,7 @@ function generate(config) {
                 let atTopLeft = x == 0 && y == 0;
                 let atBottomRight = x == rowData.length - 1 && y == mazeData.length - 1;
                 if (level != levels - 1 && (evenLevel ? atBottomRight : atTopLeft)) insertObjective(x, y, level);  // Add score zone
+                if (level == 0 && (evenLevel ? atTopLeft : atBottomRight)) insertObjective(x, y, level);  // Add final score zone
                 if (level == 0 || !(evenLevel ? atTopLeft : atBottomRight)) insertFloor(x, y, level);  // Add hole in the floor
 
                 // Add walls; we don't add edges, since we just use large edge walls
