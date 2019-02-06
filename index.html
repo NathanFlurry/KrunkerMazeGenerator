@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krunker Maze Generator</title>
+    <link rel="stylesheet" type="text/css" href="social.css">
 </head>
 <body>
-    <form id="configForm">
-        <label>Name:</label><input type="text" name="name" value="My Krunker Maze"><br/>
-        <br/>
-        <label>Width:</label><input type="number" name="width" value="8" min="1" max="32"><br/>
-        <label>Height:</label><input type="number" name="height" value="8" min="1" max="32"><br/>
-        <label>Levels:</label><input type="number" name="levels" value="6" min="1" max="32"><br/>
-        <br/>
-        <label>Chunk size:</label><input type="number" name="chunkSize" value="22"><br/>
-        <label>Wall thickness:</label><input type="number" name="wallThickness" value="4"><br/>
-        <label>Wall height:</label><input type="number" name="wallHeight" value="25"><br/>
-        <label>Floor thickness:</label><input type="number" name="floorThickness" value="4"><br/>
-        <br/>
-        <label>Textures:</label><input type="text" name="textures" value="1,2,3,4,8,9"><br/>
-        <label>Colors:</label><input type="text" name="colors" value="ffffff,ffffff,ff0000,ffffff,ffffff,0000ff"><br/>
-        <br/>
-        <input type="button" onclick="readFormConfig()" value="Generate Map">
-    </form>
+    <div id="centerPanel">
+        <h1>Krunker Maze Generator</h1>
+        <h3 style="opacity: 0.5">By Nathan Flurry</h3>
+        <form id="configForm">
+            <div><label>Name:</label><input type="text" name="name" value="My Krunker Maze"></div>
+            <div><label>Width:</label><input type="number" name="width" value="8" min="1" max="32"></div>
+            <div><label>Height:</label><input type="number" name="height" value="8" min="1" max="32"></div>
+            <div><label>Levels:</label><input type="number" name="levels" value="6" min="1" max="32"></div>
+            <br/>
+            <div><label>Chunk size:</label><input type="number" name="chunkSize" value="22"></div>
+            <div><label>Wall thickness:</label><input type="number" name="wallThickness" value="4"></div>
+            <div><label>Wall height:</label><input type="number" name="wallHeight" value="25"></div>
+            <div><label>Floor thickness:</label><input type="number" name="floorThickness" value="4"></div>
+            <br/>
+            <div><label>Textures:</label><input type="text" name="textures" value="1,2,3,4,8,9"></div>
+            <div><label>Colors:</label><input type="text" name="colors" value="ffffff,ffffff,ff0000,ffffff,ffffff,0000ff"></div>
+            <br/>
+            <a class="leaderBtn" onclick="readFormConfig()">Generate Map</a>
+        </form>
+    </div>
 
     <script src="./generator.js"></script>
 </body>

@@ -1,0 +1,93 @@
+@font-face {
+	font-family: 'GameFont';
+	src: url("./fonts/font2.ttf");
+}
+
+html, body {
+	background-color: #6d6d6d;
+	padding: 0px;
+	background-image: url("./wall_0.png");
+    background-repeat: repeat;
+	background-size: 300px 300px;
+	image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+	margin: 0px;
+}
+
+body, input {
+	outline: none;
+	font-family: "GameFont";
+	color: #353535;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+	user-select: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "GameFont";
+}
+
+a {
+	cursor: pointer;
+	text-shadow: none;
+	color: rgba(0, 0, 0, 0.6);
+	text-decoration: none;
+}
+a:active {
+    color: rgba(0, 0, 0, 0.6);
+}
+a:visited {
+    color: rgba(0, 0, 0, 0.6);
+}
+a:hover {
+	color: rgba(0, 0, 0, 0.6);
+	text-decoration: underline;
+}
+
+label {
+	display: inline-block;
+	text-align: right;
+	margin-right: 15px;
+	width: 200px;
+}
+
+input {
+	box-sizing: border-box;
+	border: none;
+	width: 150px;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+form > div {
+	margin-bottom: 5px;
+}
+
+.leaderBtn {
+	display: inline-block;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	font-size: 20px;
+	cursor: pointer;
+	color: #fff !important;
+}
+
+.leaderBtn:hover {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+#centerPanel {
+	width: 500px;
+
+	padding: 30px;
+	padding-top: 20px;
+	margin: 20px auto;
+
+	background: white;
+}

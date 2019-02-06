@@ -198,18 +198,24 @@ function readFormConfig() {
     }
 
     // Generate the map
-    let map = generate({
-        name: configRaw.name,
-        width: parseInt(configRaw.width),
-        height: parseInt(configRaw.height),
-        levels: parseInt(configRaw.levels),
-        chunkSize: parseInt(configRaw.chunkSize),
-        wallThickness: parseInt(configRaw.wallThickness),
-        wallHeight: parseInt(configRaw.wallHeight),
-        floorThickness: parseInt(configRaw.floorThickness),
-        textures: configRaw.textures.split(",").map(t => parseInt(t)),
-        colors: configRaw.colors.split(",").map(c => parseInt(c, 16))
-    });
+    let map;
+    try {
+        map = generate({
+            name: configRaw.name,
+            width: parseInt(configRaw.width),
+            height: parseInt(configRaw.height),
+            levels: parseInt(configRaw.levels),
+            chunkSize: parseInt(configRaw.chunkSize),
+            wallThickness: parseInt(configRaw.wallThickness),
+            wallHeight: parseInt(configRaw.wallHeight),
+            floorThickness: parseInt(configRaw.floorThickness),
+            textures: configRaw.textures.split(",").map(t => parseInt(t)),
+            colors: configRaw.colors.split(",").map(c => parseInt(c, 16))
+        });
+    } catch(e) {
+        alert("Error creating map:\n" + e);
+        return;
+    }
 
     // Present the data
     let serialized = JSON.stringify(map);
