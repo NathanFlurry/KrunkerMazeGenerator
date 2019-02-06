@@ -57,6 +57,8 @@ function newMaze(x, y) {
 }
 
 function generate(x, y, levels) {
+    let levelTextures = [1, 2, 3, 4, 8, 9];
+
     let chunkSize = 22;
     let wallThickness = 4;
     let wallWidth = chunkSize + wallThickness;
@@ -109,16 +111,25 @@ function generate(x, y, levels) {
         let yPos = originY + level * levelHeight;
         baseMap.objects.push({
             p: [originX + x * chunkSize, yPos, originZ + y * chunkSize],
-            s: vertical ? [wallThickness, wallHeight, wallWidth] : [wallWidth, wallHeight, wallThickness]
+            s: vertical ? [wallThickness, wallHeight, wallWidth] : [wallWidth, wallHeight, wallThickness],
+            t: levelTextures[level % levelTextures.length]
         });
     }
 
     function insertFloor(x, y, level) {
-        let yPos = originY + level * levelHeight - floorSize;
+        let yPos = originY + level * levelHeight;
         baseMap.objects.push({
-            p: [originX + (x + 0.5) * chunkSize, yPos, originZ + (y + 0.5) * chunkSize],
-            s: [chunkSize, floorSize, chunkSize]
+            p: [originX + (x + 0.5) * chunkSize, yPos - floorSize / 2, originZ + (y + 0.5) * chunkSize],
+            s: [chunkSize, floorSize / 2, chunkSize],
+            t: levelTextures[level % levelTextures.length]
         });
+        if (level != 0) {
+            baseMap.objects.push({
+                p: [originX + (x + 0.5) * chunkSize, yPos - floorSize, originZ + (y + 0.5) * chunkSize],
+                s: [chunkSize, floorSize / 2, chunkSize],
+                t: levelTextures[(level - 1) % levelTextures.length]
+            });
+        }
     }
 
     function insertObjective(x, y, level) {
