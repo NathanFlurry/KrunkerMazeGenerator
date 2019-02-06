@@ -58,6 +58,7 @@ function newMaze(x, y) {
 
 function generate(x, y, levels) {
     let levelTextures = [1, 2, 3, 4, 8, 9];
+    let levelColors = [0xff0000, 0x00ff00, 0x0000ff];
 
     let chunkSize = 22;
     let wallThickness = 4;
@@ -94,7 +95,8 @@ function generate(x, y, levels) {
         baseMap.objects.push({
             p: [originX + x * chunkSize, yPos, originZ + y * chunkSize],
             s: vertical ? [wallThickness, wallHeight, wallWidth] : [wallWidth, wallHeight, wallThickness],
-            t: levelTextures[level % levelTextures.length]
+            t: levelTextures[level % levelTextures.length],
+            c: levelColors[level % levelColors.length]
         });
     }
 
@@ -103,13 +105,15 @@ function generate(x, y, levels) {
         baseMap.objects.push({
             p: [originX + (x + 0.5) * chunkSize, yPos - floorSize / 2, originZ + (y + 0.5) * chunkSize],
             s: [chunkSize, floorSize / 2, chunkSize],
-            t: levelTextures[level % levelTextures.length]
+            t: levelTextures[level % levelTextures.length],
+            c: levelColors[level % levelColors.length]
         });
         if (level != 0) {
             baseMap.objects.push({
                 p: [originX + (x + 0.5) * chunkSize, yPos - floorSize, originZ + (y + 0.5) * chunkSize],
                 s: [chunkSize, floorSize / 2, chunkSize],
-                t: levelTextures[(level - 1) % levelTextures.length]
+                t: levelTextures[(level - 1) % levelTextures.length],
+                c: levelColors[level % levelColors.length]
             });
         }
     }
@@ -128,26 +132,31 @@ function generate(x, y, levels) {
     for (let level = 0; level < levels; level++) {
         // Add the main side walls
         let texture = levelTextures[level % levelTextures.length];
+        let color = levelColors[level % levelColors.length];
         let yPos = originY + level * levelHeight;
         baseMap.objects.push({  // Top
             p: [originX + mapWidth / 2, yPos, originZ],
             s: [mapWidth, levelHeight, wallThickness],
-            t: texture
+            t: texture,
+            c: color
         });
         baseMap.objects.push({  // Bottom
             p: [originX + mapWidth / 2, yPos, originZ +  mapHeight],
             s: [mapWidth, levelHeight, wallThickness],
-            t: texture
+            t: texture,
+            c: color
         });
         baseMap.objects.push({  // Left
             p: [originX, yPos, originZ + mapHeight / 2],
             s: [wallThickness, levelHeight, mapWidth],
-            t: texture
+            t: texture,
+            c: color
         });
         baseMap.objects.push({  // Right
             p: [originX + mapWidth, yPos, originZ + mapHeight / 2],
             s: [wallThickness, levelHeight, mapWidth],
-            t: texture
+            t: texture,
+            c: color
         });
 
         // Add the dividers
