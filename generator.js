@@ -88,8 +88,8 @@ function generate(config) {
         "sky":14477549,
         "fog":9280160,
         "fogD":900,
-        "camPos":[0, mapDepth + 3, 0],
-        "spawns":[[originX + spawnOffsetX, originY + mapDepth - wallHeight, originZ + spawnOffsetY]],
+        "camPos":[0, mapDepth - floorThickness + 3, 0],
+        "spawns":[[originX + spawnOffsetX, originY + mapDepth - floorThickness, originZ + spawnOffsetY]],
         "objects":[]
     };
 
