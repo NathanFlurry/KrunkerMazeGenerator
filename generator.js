@@ -83,7 +83,7 @@ function generate(x, y, levels) {
         "fog":9280160,
         "fogD":900,
         "camPos":[0, mapDepth + 3, 0],
-        "spawns":[[originX + spawnOffsetX, originY + mapDepth, originZ + spawnOffsetY]],
+        "spawns":[[originX + spawnOffsetX, originY + mapDepth - wallHeight, originZ + spawnOffsetY]],
         "objects":[]
     };
 
@@ -121,6 +121,16 @@ function generate(x, y, levels) {
         });
     }
 
+    function insertObjective(x, y, level) {
+        let yPos = originY + level * levelHeight;
+        baseMap.objects.push({
+            p: [originX + (x + 0.5) * chunkSize, yPos, originZ + (y + 0.5) * chunkSize],
+            s: [chunkSize, wallHeight, chunkSize],
+            id: 14,
+            col: 1
+        });
+    }
+
     // Add the dividers
     for (let level = 0; level < levels; level++) {
         let mazeData = newMaze(x, y);
@@ -130,7 +140,11 @@ function generate(x, y, levels) {
                 let dirs = rowData[x];
     
                 // Add floor
-                if (level == 0 || (level % 2 == 0 ? (x != 0 || y != 0) : (x != rowData.length - 1 || y != mazeData.length - 1))) insertFloor(x, y, level);
+                let evenLevel = level % 2 == 0;
+                let atTopLeft = x == 0 && y == 0;
+                let atBottomRight = x == rowData.length - 1 && y == mazeData.length - 1;
+                if (level != levels - 1 && (evenLevel ? atBottomRight : atTopLeft)) insertObjective(x, y, level);  // Add score zone
+                if (level == 0 || !(evenLevel ? atTopLeft : atBottomRight)) insertFloor(x, y, level);  // Add hole in the floor
 
                 // Add walls; we don't add edges, since we just use large edge walls
                 if (y != 0 &&!dirs[0]) insertWall(x + 0.5, y, level, false);  // Top
@@ -144,5 +158,5 @@ function generate(x, y, levels) {
     return baseMap;
 }
 
-let generated = generate(8, 8, 15);
+let generated = generate(8, 8, 5);
 console.log(JSON.stringify(generated));
