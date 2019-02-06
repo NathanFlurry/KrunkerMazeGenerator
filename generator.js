@@ -1,5 +1,4 @@
-function newMaze(x, y) {
-
+function newMaze(x, y) {  // From: https://github.com/dstromberg2/maze-generator/blob/master/mazegenerator.js
     // Establish variables and starting grid
     var totalCells = x*y;
     var cells = new Array();
@@ -56,16 +55,20 @@ function newMaze(x, y) {
     return cells;
 }
 
-function generate(x, y, levels) {
-    let levelTextures = [1, 2, 3, 4, 8, 9];
-    let levelColors = [0xff0000, 0x00ff00, 0x0000ff];
+function generate(config) {
+    let x = config.width;
+    let y = config.height;
+    let levels = config.levels;
 
-    let chunkSize = 22;
-    let wallThickness = 4;
+    let chunkSize = config.chunkSize;
+    let wallThickness = config.wallThickness;
     let wallWidth = chunkSize + wallThickness;
-    let wallHeight = 25;
-    let floorSize = wallThickness;
-    let levelHeight = wallHeight + floorSize;
+    let wallHeight = config.wallHeight;
+    let floorThickness = config.floorThickness;
+    let levelHeight = wallHeight + floorThickness;
+
+    let levelTextures = config.textures;
+    let levelColors = config.colors;
 
     let mapWidth = x * chunkSize;
     let mapHeight = y * chunkSize;
@@ -78,7 +81,7 @@ function generate(x, y, levels) {
     let spawnOffsetX = levels % 2 == 0 ? (chunkSize / 2) : (mapWidth - chunkSize / 2);
     let spawnOffsetY = levels % 2 == 0 ? (chunkSize / 2) : (mapHeight - chunkSize / 2);
     let baseMap = {
-        "name":"New Krunker Map",
+        "name":config.name,
         "modURL":"",
         "ambient":9937064,
         "light":15923452,
@@ -103,17 +106,17 @@ function generate(x, y, levels) {
     function insertFloor(x, y, level) {
         let yPos = originY + level * levelHeight;
         baseMap.objects.push({
-            p: [originX + (x + 0.5) * chunkSize, yPos - floorSize / 2, originZ + (y + 0.5) * chunkSize],
-            s: [chunkSize, floorSize / 2, chunkSize],
+            p: [originX + (x + 0.5) * chunkSize, yPos - floorThickness / 2, originZ + (y + 0.5) * chunkSize],
+            s: [chunkSize, floorThickness / 2, chunkSize],
             t: levelTextures[level % levelTextures.length],
             c: levelColors[level % levelColors.length]
         });
         if (level != 0) {
             baseMap.objects.push({
-                p: [originX + (x + 0.5) * chunkSize, yPos - floorSize, originZ + (y + 0.5) * chunkSize],
-                s: [chunkSize, floorSize / 2, chunkSize],
+                p: [originX + (x + 0.5) * chunkSize, yPos - floorThickness, originZ + (y + 0.5) * chunkSize],
+                s: [chunkSize, floorThickness / 2, chunkSize],
                 t: levelTextures[(level - 1) % levelTextures.length],
-                c: levelColors[level % levelColors.length]
+                c: levelColors[(level - 1) % levelColors.length]
             });
         }
     }
@@ -185,5 +188,36 @@ function generate(x, y, levels) {
     return baseMap;
 }
 
-let generated = generate(8, 8, 5);
-console.log(JSON.stringify(generated));
+function readFormConfig() {
+    // Read the form values to an object
+    let form = document.getElementById("configForm");
+    let configRaw = {};
+    for (let i = 0; i < form.elements.length; i++) {
+        let e = form.elements[i];
+        configRaw[e.name] = e.value;
+    }
+
+    // Generate the map
+    let map = generate({
+        name: configRaw.name,
+        width: parseInt(configRaw.width),
+        height: parseInt(configRaw.height),
+        levels: parseInt(configRaw.levels),
+        chunkSize: parseInt(configRaw.chunkSize),
+        wallThickness: parseInt(configRaw.wallThickness),
+        wallHeight: parseInt(configRaw.wallHeight),
+        floorThickness: parseInt(configRaw.floorThickness),
+        textures: configRaw.textures.split(",").map(t => parseInt(t)),
+        colors: configRaw.colors.split(",").map(c => parseInt(c, 16))
+    });
+
+    // Present the data
+    let serialized = JSON.stringify(map);
+    var element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(serialized));
+    element.setAttribute("download", configRaw.name);
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
