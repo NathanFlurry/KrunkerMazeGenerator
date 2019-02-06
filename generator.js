@@ -89,24 +89,6 @@ function generate(x, y, levels) {
         "objects":[]
     };
 
-    // Add the main side walls
-    baseMap.objects.push({  // Top
-        p: [originX + mapWidth / 2, originY, originZ],
-        s: [mapWidth, levels * levelHeight - floorSize, wallThickness]
-    });
-    baseMap.objects.push({  // Bottom
-        p: [originX + mapWidth / 2, originY, originZ +  mapHeight],
-        s: [mapWidth, levels * levelHeight - floorSize, wallThickness]
-    });
-    baseMap.objects.push({  // Left
-        p: [originX, originY, originZ + mapHeight / 2],
-        s: [wallThickness, levels * levelHeight - floorSize, mapWidth]
-    });
-    baseMap.objects.push({  // Right
-        p: [originX + mapWidth, originY, originZ + mapHeight / 2],
-        s: [wallThickness, levels * levelHeight - floorSize, mapWidth]
-    });
-
     function insertWall(x, y, level, vertical) {
         let yPos = originY + level * levelHeight;
         baseMap.objects.push({
@@ -144,6 +126,31 @@ function generate(x, y, levels) {
 
     // Add the dividers
     for (let level = 0; level < levels; level++) {
+        // Add the main side walls
+        let texture = levelTextures[level % levelTextures.length];
+        let yPos = originY + level * levelHeight;
+        baseMap.objects.push({  // Top
+            p: [originX + mapWidth / 2, yPos, originZ],
+            s: [mapWidth, levelHeight, wallThickness],
+            t: texture
+        });
+        baseMap.objects.push({  // Bottom
+            p: [originX + mapWidth / 2, yPos, originZ +  mapHeight],
+            s: [mapWidth, levelHeight, wallThickness],
+            t: texture
+        });
+        baseMap.objects.push({  // Left
+            p: [originX, yPos, originZ + mapHeight / 2],
+            s: [wallThickness, levelHeight, mapWidth],
+            t: texture
+        });
+        baseMap.objects.push({  // Right
+            p: [originX + mapWidth, yPos, originZ + mapHeight / 2],
+            s: [wallThickness, levelHeight, mapWidth],
+            t: texture
+        });
+
+        // Add the dividers
         let mazeData = newMaze(x, y);
         for (let y = 0; y < mazeData.length; y++) {
             let rowData = mazeData[y];
