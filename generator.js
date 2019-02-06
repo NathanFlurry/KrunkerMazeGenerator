@@ -151,13 +151,13 @@ function generate(config) {
         });
         baseMap.objects.push({  // Left
             p: [originX, yPos, originZ + mapHeight / 2],
-            s: [wallThickness, levelHeight, mapWidth],
+            s: [wallThickness, levelHeight, mapHeight],
             t: texture,
             c: color
         });
         baseMap.objects.push({  // Right
             p: [originX + mapWidth, yPos, originZ + mapHeight / 2],
-            s: [wallThickness, levelHeight, mapWidth],
+            s: [wallThickness, levelHeight, mapHeight],
             t: texture,
             c: color
         });
