@@ -56,18 +56,29 @@ function newMaze(x, y) {
     return cells;
 }
 
-function generate(x, y) {
+function generate(x, y, levels) {
     let chunkSize = 16;
     let wallThickness = 2;
     let wallWidth = chunkSize + wallThickness;
     let wallHeight = 30;
-    let floorSize;
+    let floorSize = 5;
     let originX = -x * chunkSize / 2;
     let originY = floorSize;
     let originZ = -y * chunkSize / 2;
 
     let mazeData = newMaze(x, y);
-    let baseMap = {"name":"New Krunker Map","modURL":"","ambient":9937064,"light":15923452,"sky":14477549,"fog":9280160,"fogD":900,"camPos":[0,0,0],"spawns":[],"objects":[{"p":[0,21,0],"s":[10,10,10]}]}
+    let baseMap = {
+        "name":"New Krunker Map",
+        "modURL":"",
+        "ambient":9937064,
+        "light":15923452,
+        "sky":14477549,
+        "fog":9280160,
+        "fogD":900,
+        "camPos":[0,floorSize + wallHeight + 3,0],
+        "spawns":[[chunkSize / 2, floorSize, chunkSize / 2]],
+        "objects":[]
+    };
 
     baseMap.objects.push({
         p: [0, 0, 0],
@@ -96,5 +107,5 @@ function generate(x, y) {
     return baseMap;
 }
 
-let generated = generate(15, 15);
+let generated = generate(15, 15, 3);
 console.log(JSON.stringify(generated));
